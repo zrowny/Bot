@@ -29,5 +29,5 @@ await getAccessToken()
     Mac and Linux: Open a terminal and cd to the directory you installed into
     
 5. Install the necessary depdendencies with `npm i`
-6. For the bot out with `node bot.js ACCESS_TOKEN_HERE`
+6. For the bot out with `node headless.js ACCESS_TOKEN_HERE`
 7. BONUS: You can do the last two steps as many times as you want for additional accounts. Make sure you use other accounts otherwise it won't do anything.
