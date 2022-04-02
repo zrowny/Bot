@@ -32,7 +32,7 @@ def gen_orders_for_image(image_path):
 	def rgb_to_hex(rgb):
 		return '#' + (('%02x%02x%02x' % rgb).upper())
 
-	for x in range(1000):
+	for x in range(2000):
 		for y in range(1000):
 			colors = pix[x, y]
 			if colors[3] == 0:
