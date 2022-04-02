@@ -1,7 +1,11 @@
 import json
 from PIL import Image
+import sys
 
-im = Image.open('reference.png') 
+if (len(sys.argv) < 2):
+	print("Usage: reference.py <image>")
+	sys.exit(1)
+im = Image.open(sys.argv[1])
 pix = im.load()
 
 color_mappings = {
