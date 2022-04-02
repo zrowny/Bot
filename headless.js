@@ -76,10 +76,9 @@ async function attemptPlace() {
 		const x = order[0];
 		const y = order[1];
 		const colorId = order[2];
-        const index = (8000 * y) + (x * 4);
+        const index = (4000 * y) + (x * 4);
 
 		const hex = rgbToHex(rgbaCanvas[index], rgbaCanvas[index + 1], rgbaCanvas[index + 2]);
-        console.log(hex);
 		const currentColorId = COLOR_MAPPINGS[hex];
 		// Deze pixel klopt al.
 		if (currentColorId == colorId) continue;
