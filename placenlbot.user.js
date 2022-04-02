@@ -90,6 +90,7 @@ async function attemptPlace() {
 			text: `Trying to post pixel to ${x}, ${y}...`,
 			duration: 10000
 		}).showToast();
+		console.log(`Trying to post pixel to ${x}, ${y}...`);
 		await place(x, y, colorId);
 
 		Toastify({
