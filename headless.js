@@ -13,13 +13,6 @@ let accessToken = process.env.ACCESS_TOKEN || args[0];
 
 var placeOrders;
 
-var order = [];
-for (var i = 0; i < 1000000; i++) {
-    order.push(i);
-}
-order.sort(() => Math.random() - 0.5);
-
-
 const COLOR_MAPPINGS = {
 	'#FF4500': 2,
 	'#FFA800': 3,
@@ -46,16 +39,22 @@ const COLOR_MAPPINGS = {
 })();
 
 function updateOrders() {
-	fetch('https://trafficconegod.github.io/Bot/orders.json').then(async (response) => {
-		if (!response.ok) return console.warn('Kan orders niet ophalen! (non-ok status code)');
-		const data = await response.json();
+    return new Promise((resolve, reject) => {
+        fetch('https://trafficconegod.github.io/Bot/orders.json').then(async (response) => {
+            if (!response.ok) return console.warn('Kan orders niet ophalen! (non-ok status code)');
+            const data = await response.json();
 
-		if (JSON.stringify(data) !== JSON.stringify(placeOrders)) {
-			console.log(`New orders loaded. Total pixels: ${data.length}.`);
-		}
+            if (JSON.stringify(data) !== JSON.stringify(placeOrders)) {
+                console.log(`New orders loaded. Total pixels: ${data.length}.`);
+            }
 
-		placeOrders = data;
-	}).catch((e) => console.warn('Can\'t fetch orders!', e));
+            placeOrders = data;
+            resolve();
+        }).catch((e) => {
+            console.warn('Can\'t fetch orders!', e);
+            reject();
+        });
+    });
 }
 
 async function attemptPlace() {
@@ -81,7 +80,7 @@ async function attemptPlace() {
 		const currentColorId = COLOR_MAPPINGS[hex];
 		// Deze pixel klopt al.
 		if (currentColorId == colorId) continue;
-
+        
 		console.log(`Trying to post pixel to ${x}, ${y}...`);
 		await place(x, y, colorId);
 
