@@ -7,7 +7,7 @@ The bot for /r/fuckcars! This bot automatically fetches [orders](https://github.
 Before you start, make sure your pixel latency has expired!
 
 1. Install the [Tampermonkey](https://www.tampermonkey.net/) browser extension.
-2. Click on this link: [https://github.com/TrafficConeBot/Bot/raw/master/placenlbot.user.js](https://github.com/TrafficConeBot/Bot/raw/master/placenlbot.user.js). If all goes well, Tampermonkey should offer you to install a userscript. Click on **Install**.
+2. Click on this link: [https://github.com/TrafficConeGod/Bot/raw/master/placenlbot.user.js](https://github.com/TrafficConeGod/Bot/raw/master/placenlbot.user.js). If all goes well, Tampermonkey should offer you to install a userscript. Click on **Install**.
 3. Reload your **r/place** tab. If everything went well, you'll see "Get access token..." at the top right of your screen. The bot is now active, and will keep you informed of what it is doing via these notifications at the top right of your screen.
 
 ## Disadvantages of this bot
