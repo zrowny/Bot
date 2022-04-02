@@ -1,18 +1,30 @@
-# /r/fuckcars Bot
+# r/fuckcars Bot
+### Obtain your access token
+1. Go to [r/place](https://www.reddit.com/r/place/)
+2. Open the browser console (F12/Inspect element -> Click on console)
+3. Paste the following code and press enter:
+```js
+async function getAccessToken() {
+const usingOldReddit = window.location.href.includes('new.reddit.com');
+const url = usingOldReddit ? 'https://new.reddit.com/r/place/' : 'https://www.reddit.com/r/place/';
+const response = await fetch(url);
+const responseText = await response.text();
 
-The bot for /r/fuckcars! This bot automatically fetches [orders](https://github.com/TrafficConeGod/Bot/orders.json) every few minutes, to prevent bots from working against each other.
+return responseText.split('\"accessToken\":\"')[1].split('"')[0];
 
-## Installation instructions
+await getAccessToken()
+```
+4. The text between the quotes (`"`) is your access token.
 
-Before you start, make sure your pixel latency has expired!
+### Installation Instructions
 
-1. Install the [Tampermonkey](https://www.tampermonkey.net/) browser extension.
-2. Click on this link: [https://github.com/TrafficConeGod/Bot/raw/master/placenlbot.user.js](https://github.com/TrafficConeGod/Bot/raw/master/placenlbot.user.js). If all goes well, Tampermonkey should offer you to install a userscript. Click on **Install**.
-3. Reload your **r/place** tab. If everything went well, you'll see "Get access token..." at the top right of your screen. The bot is now active, and will keep you informed of what it is doing via these notifications at the top right of your screen.
-
-## Disadvantages of this bot
-
-- When the bot places a pixel, it looks to yourself as if you can still place a pixel, when the bot has already done this for you (so you are in the 5 minute cooldown).
-- The bot does not yet take into account an existing cooldown, so it assumes that when you open **r/place** you can immediately place a pixel. In the worst case scenario, your first pixel could waste 4 minutes and 59 seconds of time. 
-
-Thanks to /r/placeNL, whose code provided the base for this bot.
+1. Install [NodeJS](https://nodejs.org/).
+2. Download the bot from [this link](https://github.com/TrafficConeGod/Bot/archive/refs/heads/master.zip).
+3. Extract the bot to a folder somewhere on your computer.
+4. Open a command prompt/terminal in this folder
+    Windows: Shift + Right mouse button in the folder -> Click on "Open Powershell here"
+    Mac: Really no idea. Sorry!
+    Linux: If you're using linux and don't already know how to do this then maybe just use windows :P.
+5. Install the necessary depdendencies with `npm i`
+6. For the bot out with `node bot.js ACCESS_TOKEN_HERE`
+7. BONUS: You can do the last two steps as many times as you want for additional accounts. Make sure you use other accounts otherwise it won't do anything.
