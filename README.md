@@ -22,11 +22,10 @@ await getAccessToken()
 2. Download the bot from [this link](https://github.com/TrafficConeGod/Bot/archive/refs/heads/master.zip).
 3. Extract the bot to a folder somewhere on your computer.
 4. Open a command prompt/terminal in this folder
+
     Windows: Shift + Right mouse button in the folder -> Click on "Open Powershell here"
     
-    Mac: Really no idea. Sorry!
-    
-    Linux: If you're using linux and don't already know how to do this then maybe just use windows :P.
+    Mac and Linux: Open a terminal and cd to the directory you installed into
     
 5. Install the necessary depdendencies with `npm i`
 6. For the bot out with `node bot.js ACCESS_TOKEN_HERE`
