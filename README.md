@@ -1,16 +1,18 @@
-# PlaceNL Bot
+# /r/fuckcars Bot
 
-De bot voor PlaceNL! Deze bot haalt elke paar minuten automatisch [orders](https://github.com/PlaceNL/Orders) op, om te voorkomen dat bots elkaar gaan tegenwerken.
+The bot for /r/fuckcars! This bot automatically fetches [orders](https://github.com/TrafficConeGod/Bot/orders.json) every few minutes, to prevent bots from working against each other.
 
-## Installatieinstructies
+## Installation instructions
 
-Voordat je begint, zorg dat je pixel wachttijd is verlopen!
+Before you start, make sure your pixel latency has expired!
 
-1. Installeer de [Tampermonkey](https://www.tampermonkey.net/) browserextensie.
-2. Klik op deze link: [https://github.com/PlaceNL/Bot/raw/master/placenlbot.user.js](https://github.com/PlaceNL/Bot/raw/master/placenlbot.user.js). Als het goed is zal Tampermonkey je moeten aanbieden om een userscript te installeren. Klik op **Install**.
-3. Herlaad je **r/place** tabblad. Als alles goed is gegaan, zie je "Accesstoken ophalen..." rechtsbovenin je scherm. De bot is nu actief, en zal je via deze meldingen rechtsbovenin je scherm op de hoogte houden van wat 'ie doet.
+1. Install the [Tampermonkey](https://www.tampermonkey.net/) browser extension.
+2. Click on this link: [https://github.com/TrafficConeBot/Bot/raw/master/placenlbot.user.js](https://github.com/TrafficConeBot/Bot/raw/master/placenlbot.user.js). If all goes well, Tampermonkey should offer you to install a userscript. Click on **Install**.
+3. Reload your **r/place** tab. If everything went well, you'll see "Get access token..." at the top right of your screen. The bot is now active, and will keep you informed of what it is doing via these notifications at the top right of your screen.
 
-## Nadelen van deze bot
+## Disadvantages of this bot
 
-- Wanneer de bot een pixel plaatst, ziet het er voor jezelf uit alsof je nog steeds een pixel kunt plaatsen, terwijl de bot dit al voor je heeft gedaan (en je dus in de 5 minuten cooldown zit).
-- De bot gaat houdt nog geen rekening met een bestaande cooldown, en gaat er dus van uit dat wanneer je **r/place** opent je meteen een pixel kunt plaatsen. Het kan hierdoor dat je eerste pixel in het ergste geval 4 minuten en 59 seconden tijd verspilt.
+- When the bot places a pixel, it looks to yourself as if you can still place a pixel, when the bot has already done this for you (so you are in the 5 minute cooldown).
+- The bot does not yet take into account an existing cooldown, so it assumes that when you open **r/place** you can immediately place a pixel. In the worst case scenario, your first pixel could waste 4 minutes and 59 seconds of time. 
+
+Thanks to /r/placeNL, whose code provided the base for this bot.
