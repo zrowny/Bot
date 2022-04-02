@@ -41,7 +41,8 @@ const COLOR_MAPPINGS = {
 };
 
 (async function () {
-    await updateOrders();
+	setInterval(updateOrders, 5 * 60 * 1000); // Update orders every 5 minutes
+	await updateOrders();
     attemptPlace();
 })();
 
