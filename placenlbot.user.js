@@ -15,7 +15,7 @@
 // @grant        GM_addStyle
 // ==/UserScript==
 
-// Sorry voor de rommelige code, haast en clean gaatn iet altijd samen ;)
+// Sorry about the messy code, I'll clean it up later
 
 var placeOrders = [];	
 var accessToken;
@@ -56,7 +56,7 @@ const COLOR_MAPPINGS = {
 		duration: 10000
 	}).showToast();
 
-	setInterval(updateOrders, 5 * 60 * 1000); // Update orders elke vijf minuten.
+	setInterval(updateOrders, 5 * 60 * 1000); // Update orders every 5 minutes
 	await updateOrders();
 	attemptPlace();
 })();
@@ -72,7 +72,7 @@ async function attemptPlace() {
 			text: 'Error retrieving folder. Try again in 15 sec...',
 			duration: 10000
 		}).showToast();
-		setTimeout(attemptPlace, 15000); // probeer opnieuw in 15sec.
+		setTimeout(attemptPlace, 15000); // Try again 15sec.
 		return;
 	}
 
@@ -105,7 +105,7 @@ async function attemptPlace() {
 		text: 'All pixels are already in the right place!',
 		duration: 10000
 	}).showToast();
-	setTimeout(attemptPlace, 30000); // probeer opnieuw in 30sec.
+	setTimeout(attemptPlace, 30000); // Try again 30sec.
 }
 
 function updateOrders() {
@@ -121,7 +121,7 @@ function updateOrders() {
 		}
 
 		placeOrders = data;
-	}).catch((e) => console.warn('Kan orders niet ophalen!', e));
+	}).catch((e) => console.warn('Can\'t fetch orders!', e));
 }
 
 function place(x, y, color) {
