@@ -114,7 +114,7 @@ function updateOrders() {
 
 		if (JSON.stringify(data) !== JSON.stringify(placeOrders)) {
 			Toastify({
-				text: `Nieuwe orders geladen. Totaal aantal pixels: ${data.length}.`,
+				text: `New orders loaded. Total pixels: ${data.length}.`,
 				duration: 10000
 			}).showToast();
 		}
