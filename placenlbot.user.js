@@ -22,22 +22,30 @@ var accessToken;
 var canvas = document.createElement('canvas');
 
 const COLOR_MAPPINGS = {
-	'#FF4500': 2,
-	'#FFA800': 3,
-	'#FFD635': 4,
-	'#00A368': 6,
-	'#7EED56': 8,
-	'#2450A4': 12,
-	'#3690EA': 13,
-	'#51E9F4': 14,
-	'#811E9F': 18,
-	'#B44AC0': 19,
-	'#FF99AA': 23,
-	'#9C6926': 25,
-	'#000000': 27,
-	'#898D90': 29,
-	'#D4D7D9': 30,
-	'#FFFFFF': 31
+    '#BE0039': 1,
+    '#FF4500': 2,
+    '#FFA800': 3,
+    '#FFD635': 4,
+    '#00A368': 6,
+    '#00CC78': 7,
+    '#7EED56': 8,
+    '#00756F': 9,
+    '#009EAA': 10,
+    '#2450A4': 12,
+    '#3690EA': 13,
+    '#51E9F4': 14,
+    '#493AC1': 15,
+    '#6A5CFF': 16,
+    '#811E9F': 18,
+    '#B44AC0': 19,
+    '#FF3881': 22,
+    '#FF99AA': 23,
+    '#6D482F': 24,
+    '#9C6926': 25,
+    '#000000': 27,
+    '#898D90': 29,
+    '#D4D7D9': 30,
+    '#FFFFFF': 31
 };
 
 (async function () {
@@ -64,15 +72,19 @@ const COLOR_MAPPINGS = {
 async function attemptPlace() {
 	var ctx;
 	try {
-		const canvasUrl = await getCurrentImageUrl();
-		ctx = await getCanvasFromUrl(canvasUrl);
+		const canvasUrl = await getCurrentImageUrl('0');
+		const canvasUrl2 = await getCurrentImageUrl('1');
+		console.warn("cv " + canvasUrl);
+		console.warn("cv2 " + canvasUrl2);
+		ctx = await getCanvasFromUrl(canvasUrl, 0, 0);
+		await getCanvasFromUrl(canvasUrl2, 1000, 0);
 	} catch (e) {
-		console.warn('Fout bij ophalen map: ', e);
+		console.warn("Error creating reference canvas:", e);
 		Toastify({
-			text: 'Error retrieving folder. Try again in 15 sec...',
+			text: 'Error creating reference canvas. Trying again in 15 sec...',
 			duration: 10000
 		}).showToast();
-		setTimeout(attemptPlace, 15000); // Try again 15sec.
+		setTimeout(attemptPlace, 15000); // Try again in 15sec.
 		return;
 	}
 
@@ -164,60 +176,76 @@ async function getAccessToken() {
 	return responseText.split('\"accessToken\":\"')[1].split('"')[0];
 }
 
-async function getCurrentImageUrl() {
-	return new Promise((resolve, reject) => {
-		const ws = new WebSocket('wss://gql-realtime-2.reddit.com/query', 'graphql-ws');
+async function getCurrentImageUrl(id = '0') {
+    return new Promise((resolve, reject) => {
+        const ws = new WebSocket('wss://gql-realtime-2.reddit.com/query', 'graphql-ws');
 
-		ws.onopen = () => {
-			ws.send(JSON.stringify({
-				'type': 'connection_init',
-				'payload': {
-					'Authorization': `Bearer ${accessToken}`
-				}
-			}));
-			ws.send(JSON.stringify({
-				'id': '1',
-				'type': 'start',
-				'payload': {
-					'variables': {
-						'input': {
-							'channel': {
-								'teamOwner': 'AFD2022',
-								'category': 'CANVAS',
-								'tag': '0'
-							}
-						}
-					},
-					'extensions': {},
-					'operationName': 'replace',
-					'query': 'subscription replace($input: SubscribeInput!) {\n  subscribe(input: $input) {\n    id\n    ... on BasicMessage {\n      data {\n        __typename\n        ... on FullFrameMessageData {\n          __typename\n          name\n          timestamp\n        }\n      }\n      __typename\n    }\n    __typename\n  }\n}'
-				}
-			}));
-		};
+        ws.onopen = () => {
+            ws.send(JSON.stringify({
+                'type': 'connection_init',
+                'payload': {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            }));
+            ws.send(JSON.stringify({
+                'id': '1',
+                'type': 'start',
+                'payload': {
+                    'variables': {
+                        'input': {
+                            'channel': {
+                                'teamOwner': 'AFD2022',
+                                'category': 'CANVAS',
+                                'tag': id
+                            }
+                        }
+                    },
+                    'extensions': {},
+                    'operationName': 'replace',
+                    'query': 'subscription replace($input: SubscribeInput!) {\n  subscribe(input: $input) {\n    id\n    ... on BasicMessage {\n      data {\n        __typename\n        ... on FullFrameMessageData {\n          __typename\n          name\n          timestamp\n        }\n      }\n      __typename\n    }\n    __typename\n  }\n}'
+                }
+            }));
+        };
 
-		ws.onmessage = (message) => {
-			const { data } = message;
-			const parsed = JSON.parse(data);
+        ws.onmessage = (message) => {
+            const { data } = message;
+            const parsed = JSON.parse(data);
 
-			// TODO: ew
-			if (!parsed.payload || !parsed.payload.data || !parsed.payload.data.subscribe || !parsed.payload.data.subscribe.data) return;
+            // TODO: ew
+            if (!parsed.payload || !parsed.payload.data || !parsed.payload.data.subscribe || !parsed.payload.data.subscribe.data) return;
 
-			ws.close();
-			resolve(parsed.payload.data.subscribe.data.name);
-		}
+            ws.close();
+            resolve(parsed.payload.data.subscribe.data.name);
+        }
 
-
-		ws.onerror = reject;
-	});
+        ws.onerror = reject;
+    });
 }
 
-function getCanvasFromUrl(url) {
+function getCanvasFromUrl(url, x, y) {
+	GM.xmlHttpRequest({
+		method: "GET",
+		url: url,
+		headers: {
+			"Accept": "image/avif,image/webp"
+		},
+		onload: response => {
+			console.log(
+				response.status,
+				response.statusText,
+				response.readyState,
+				response.responseHeaders,
+				response.responseText,
+				response.finalUrl
+			);
+		}
+	});
 	return new Promise((resolve, reject) => {
 		var ctx = canvas.getContext('2d');
 		var img = new Image();
 		img.crossOrigin = 'anonymous';
 		img.onload = () => {
-			ctx.drawImage(img, 0, 0);
+			ctx.drawImage(img, x, y);
 			resolve(ctx);
 		};
 		img.onerror = reject;
