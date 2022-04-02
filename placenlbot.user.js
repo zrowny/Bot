@@ -18,8 +18,7 @@
 // Sorry voor de rommelige code, haast en clean gaatn iet altijd samen ;)
 
 var placeOrders = [
-	[972, 786, 27],
-	[929, 774, 27]
+	[972, 786, 27]
 ];
 var accessToken;
 var canvas = document.createElement('canvas');
