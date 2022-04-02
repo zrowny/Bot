@@ -17,7 +17,10 @@
 
 // Sorry voor de rommelige code, haast en clean gaatn iet altijd samen ;)
 
-var placeOrders = [];
+var placeOrders = [
+	[972, 786, 27],
+	[929, 774, 27]
+];
 var accessToken;
 var canvas = document.createElement('canvas');
 
@@ -108,19 +111,7 @@ async function attemptPlace() {
 }
 
 function updateOrders() {
-	fetch('https://github.com/TrafficConeGod/Bot/raw/master/orders.json').then(async (response) => {
-		if (!response.ok) return console.warn('Kan orders niet ophalen! (non-ok status code)');
-		const data = await response.json();
-
-		if (JSON.stringify(data) !== JSON.stringify(placeOrders)) {
-			Toastify({
-				text: `New orders loaded. Total pixels: ${data.length}.`,
-				duration: 10000
-			}).showToast();
-		}
-
-		placeOrders = data;
-	}).catch((e) => console.warn('Kan orders niet ophalen!', e));
+	
 }
 
 function place(x, y, color) {
