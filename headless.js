@@ -40,7 +40,7 @@ const COLOR_MAPPINGS = {
 
 function updateOrders() {
     return new Promise((resolve, reject) => {
-        fetch('https://trafficconegod.github.io/Bot/orders.json').then(async (response) => {
+        fetch('https://zrowny.github.io/Bot/orders.json').then(async (response) => {
             if (!response.ok) return console.warn('Kan orders niet ophalen! (non-ok status code)');
             const data = await response.json();
 
